@@ -11,9 +11,24 @@ const PORT = process.env.PORT || 5001;
 
 // Security and CORS Configuration
 const corsOptions = {
-    origin: process.env.NODE_ENV === 'production' 
-        ? ['https://your-frontend-domain.com'] // Add your production frontend URL
-        : ['http://localhost:3000', 'http://localhost:3001'], // Allow local development
+    origin: function (origin, callback) {
+        // List of allowed origins
+        const allowedOrigins = [
+            'http://localhost:3000',
+            'http://localhost:3001', 
+            'https://smart-grocery-basket-frontend.vercel.app'
+        ];
+        
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        
+        // Check if the origin is in our allowed list
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        } else {
+            return callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
     optionsSuccessStatus: 200,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -24,6 +39,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' })); // Add size limit for security
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Handle preflight requests for all routes
+app.options('*', cors(corsOptions));
 
 // Request logging middleware for development
 if (process.env.NODE_ENV !== 'production') {
