@@ -1,31 +1,73 @@
 {
-  "name": "trial",
+  "name": "smart-grocery-basket-backend",
   "version": "1.0.0",
+  "description": "Backend API for Smart Grocery Basket application with barcode scanning functionality",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
   },
-  "author": "",
-  "license": "ISC",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "seed": "node seed.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "validate": "npm run lint && npm run format:check"
+  },
+  "keywords": [
+    "grocery",
+    "shopping",
+    "barcode",
+    "scanner",
+    "api",
+    "express",
+    "mongodb",
+    "nodejs"
+  ],
+  "author": "Intel IoT Club",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Intel-IoT-Club/smart_grocery_backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Intel-IoT-Club/smart_grocery_backend/issues"
+  },
+  "homepage": "https://github.com/Intel-IoT-Club/smart_grocery_backend#readme",
   "dependencies": {
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "mongoose": "^8.12.1"
+    "express-rate-limit": "^7.4.1",
+    "express-validator": "^7.2.0",
+    "helmet": "^8.0.0",
+    "joi": "^17.13.3",
+    "mongoose": "^8.12.1",
+    "winston": "^3.15.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Intel-IoT-Club/smart_grocery_backend.git"
-  },
-  "keywords": [],
-  "bugs": {
-    "url": "https://github.com/Intel-IoT-Club/smart_grocery_backend/issues"
-  },
-  "homepage": "https://github.com/Intel-IoT-Club/smart_grocery_backend#readme",
-  "description": "",
   "devDependencies": {
     "nodemon": "^3.1.9"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "node_modules/*",
+      "*.json"
+    ],
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "ext": "js,json",
+    "watch": [
+      ".",
+      "models/",
+      "routes/",
+      "middleware/",
+      "config/"
+    ]
   }
 }
